@@ -3,31 +3,33 @@
 
 int main(void)
 {
-	Texture2D sprite;
-
 	const int screenWidth = 900;
 	const int screenHeight = 600;
 	InitWindow(screenWidth, screenHeight, "New Window");
 
-	sprite = LoadTexture("junk/israfel.png");
-	float spriteX = 0.0f;
-	float spriteY = 0.0f;
-	float theta = 0.0f;
-	int r = 150;
+	double posX = 0;
+	int posY = 0;
 	
 	SetTargetFPS(60);
+	
 	while(!WindowShouldClose())
 	{
+		if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+			posX = 0;
+			posY = 300;
+		}
+		
+		posX+=GetFrameTime()*150;
+		if(posX > 900){
+			posX=-10;
+		}
+
+		posY = sin(posX/50)*100 + 300;
+
 		BeginDrawing();
-			ClearBackground(RAYWHITE);
+			ClearBackground(LIGHTGRAY);
 
-			spriteX = r * cos(theta) + 300;
-			spriteY = r * sin(theta) + 300;
-
-			theta -= GetFrameTime() * 5;
-			
-			DrawTexture(sprite, spriteX, spriteY, WHITE);
-
+			DrawRectangle(posX, posY, 10, 10, BLACK);
 		EndDrawing();
 	}
 	
